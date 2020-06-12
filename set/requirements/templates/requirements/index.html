@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main role="main">
+  <div class="container">
+    {% if requirement_list %}
+  	<table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Description</th>
+  		    <th scope="col">Parent</th>
+  		    <th scope="col">Is Constraint</th>
+  		    <th scope="col">Priority</th>
+  		    <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for requirement in requirement_list %}
+  	    <tr>
+          <td><a href="{% url 'requirements:detail' requirement.id %}">{{ requirement.id }}</a></td>
+          <td>{{ requirement.description }}</td>
+  		    <td>{{ requirement.parent }}</td>
+  		    <td>{{ requirement.is_constraint }}</td>
+  		    <td>{{ requirement.get_priority_display }}</td>
+  		    <td>{{ requirement.get_status_display }}</td>
+        </tr>
+      {% endfor %}
+	    </tbody>
+    </table>
+
+    {% if is_paginated %}
+    <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+  {% endif %}
+
+    {% else %}
+        <p>No requirements are available.</p>
+    {% endif %}
+  </div>
+  <div class="container">
+    <a href="{% url 'requirements:create' %}" class="btn btn-primary">Create New Requirement</a>
+  </div>
+</main>
+{% endblock %}

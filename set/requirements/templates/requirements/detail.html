@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!--TODO find a better way to render a detail view automatically based on the model.
+{% for key, value in requirement_object.items %}
+{{ key }}{{ value }}
+{% endfor %}
+-->
+
+<h1>Requirement {{ requirement.id }}</h1>
+<table>
+  <tbody><tr><th><label for="id_description">Description:</label></th><td><textarea disabled name="description" cols="40" rows="10" required="" id="id_description">{{ requirement.description }}</textarea></td></tr>
+<tr><th><label for="id_parent">Parent:</label></th><td><select disabled name="parent" id="id_parent">
+  <option value="" selected disabled>{{ requirement.parent }}</option>
+</select></td></tr>
+<tr><th><label for="id_is_constraint">Is constraint:</label></th><td><input disabled type="checkbox" name="is_constraint" id="id_is_constraint" {% if requirement.is_constraint %}checked{% endif %}></td></tr>
+<tr><th><label for="id_min_measure_of_effectiveness">Min measure of effectiveness:</label></th><td><textarea disabled name="min_measure_of_effectiveness" cols="40" rows="10" id="id_min_measure_of_effectiveness">{{ requirement.min_measure_of_effectiveness }}</textarea></td></tr>
+<tr><th><label for="id_target_measure_of_effectiveness">Target measure of effectiveness:</label></th><td><textarea disabled name="target_measure_of_effectiveness" cols="40" rows="10" id="id_target_measure_of_effectiveness">{{ requirement.target_measure_of_effectiveness }}</textarea></td></tr>
+<tr><th><label for="id_rationale">Rationale:</label></th><td><textarea disabled name="rationale" cols="40" rows="10" id="id_rationale">{{ requirement.rationale }}</textarea></td></tr>
+<tr><th><label for="id_remarks">Remarks:</label></th><td><textarea disabled name="remarks" cols="40" rows="10" id="id_remarks">{{ requirement.remarks }}</textarea></td></tr>
+<tr><th><label for="id_acceptance_criteria_type">Acceptance criteria type:</label></th><td><select disabled name="acceptance_criteria_type" id="id_acceptance_criteria_type">
+  <option value="{{ requirement.acceptance_criteria_type }}" selected disabled>{{ requirement.get_acceptance_criteria_type_display }}</option>
+</select></td></tr>
+<tr><th><label for="id_priority">Priority:</label></th><td><select disabled name="priority" id="id_priority">
+  <option value="{{ requirement.priority }}" selected disabled>{{ requirement.get_priority_display }}</option>
+</select></td></tr>
+<tr><th><label for="id_status">Status:</label></th><td><select disabled name="status" id="id_status">
+  <option value="{{ requirement.status }}" selected="">{{ requirement.get_status_display }}</option>
+</select></td></tr>
+  </tbody></table>
+
+</br>
+<a href="{{ requirement.get_edit_url }}" class="btn btn-primary">Update Requirement</a>
+
+{% endblock %}
